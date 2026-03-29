@@ -1,6 +1,5 @@
 # DVJlab_code
-This file demonstrates the methodology behind a computational cardiac pipeline applied to 20 GMSH tetrahedral surface meshes spanning 9 subjects (identifiers: W282, W283, Y283, Y322, Y325, Y329, Y339, Y340, and Z210) across four time points: Weeks 0, 4, 8, and 12. 
-Each mesh encodes the rat biventricular geometry with four labeled physical surfaces: left ventricular (LV) endocardium, right ventricular (RV) endocardium, epicardium, and basal plane.
+This file demonstrates the methodology behind a computational cardiac pipeline applied to 20 GMSH tetrahedral surface meshes spanning 9 subjects (identifiers: W282, W283, Y283, Y322, Y325, Y329, Y339, Y340, and Z210) across four time points: Weeks 0, 4, 8, and 12. Each mesh encodes the rat biventricular geometry with four labeled physical surfaces: left ventricular (LV) endocardium, right ventricular (RV) endocardium, epicardium, and basal plane.
 The primary outputs are (1) LV and RV endocardial cavity volumes in mm³, (2) LV and RV free wall thicknesses in mm, and (3) interventricular septal thickness (mm)
 
 1) Mesh Format and Parsing:
@@ -8,14 +7,12 @@ The  mesh file format encodes: Physical Names block: named surface/volume groups
 
 Endocardial Volume Computation:
 Cavity volumes are computed from the triangulated endocardial surfaces using the divergence theorem (also known as the signed tetrahedral decomposition from the origin):
-V = (1/6) | Σ v₁ · (v₂ × v₃) |
-where v₁, v₂, v₃ are the three vertices of each surface triangle, and the summation runs over all triangles in the closed endocardial surface. The absolute value ensures positive volume regardless of triangle orientation. This method is exact for polyhedral surfaces and equivalent to integrating the signed volume of tetrahedra formed between each triangle and the coordinate origin.
+V = (1/6) | Σ v₁ · (v₂ × v₃) | where v₁, v₂, v₃ are the three vertices of each surface triangle, and the summation runs over all triangles in the closed endocardial surface. The absolute value ensures positive volume regardless of triangle orientation. This method is exact for polyhedral surfaces and equivalent to integrating the signed volume of tetrahedra formed between each triangle and the coordinate origin.
 For the total myocardial volume, the sum of all tetrahedral element volumes is computed using the scalar triple product:
-V_tet = |det([b−a, c−a, d−a])| / 6
-where a, b, c, and d are the four vertices of the tetrahedron.
+V_tet = |det([b−a, c−a, d−a])| / 6 where a, b, c, and d are the four vertices of the tetrahedron.
 References: Lorensen & Cline (1987), Marching Cubes; Zhang & Chen (2001), Efficient Feature Extraction; Legrice et al., rat heart geometry studies.
 
-Wall Thickness — Closest-Point Projection:
+Wall Thickness (Closest-Point Projection) :
 Wall thickness is measured using the closest-point (nearest-neighbour) projection method: for each node on the endocardial surface, the minimum Euclidean distance to any node on the epicardial surface is computed:
 d(p) = minᵢ ‖p − eᵢ‖₂,   thickness = mean{d(p)}
 where p iterates over all endocardial surface nodes, and eᵢ iterates over all epicardial surface nodes. Outliers are excluded by rejecting distances outside the range [0.05, 20] mm.
