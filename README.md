@@ -1,13 +1,13 @@
 # DVJlab_code
-This file demonstrates the complete methodology of a computational cardiac pipeline applied to 20 GMSH tetrahedral surface meshes spanning 9 subjects (identifiers: W282, W283, Y283, Y322, Y325, Y329, Y339, Y340, and Z210) across four time points: Weeks 0, 4, 8, and 12. 
+This file demonstrates the methodology behind a computational cardiac pipeline applied to 20 GMSH tetrahedral surface meshes spanning 9 subjects (identifiers: W282, W283, Y283, Y322, Y325, Y329, Y339, Y340, and Z210) across four time points: Weeks 0, 4, 8, and 12. 
 Each mesh encodes the rat biventricular geometry with four labeled physical surfaces: left ventricular (LV) endocardium, right ventricular (RV) endocardium, epicardium, and basal plane.
 The primary outputs are (1) LV and RV endocardial cavity volumes in mm³, (2) LV and RV free wall thicknesses in mm, (3) interventricular septal thickness
 
-Mesh Format and Parsing
+Mesh Format and Parsing-
 The  mesh file format encodes: Physical Names block: named surface/volume groups (base, epi, lv, rv, Group_1); Entities block: maps entity tags to physical group tags for both 2D surfaces and 3D volumes. Nodes block: 3D Cartesian coordinates (x, y, z) in millimetres for all mesh nodes); Elements block: connectivity for surface triangles (element type 2, 3-node) and volume tetrahedra (element type 4, 4-node)
 The parser resolves the two-level indirection (entity tag → physical tag → name) to label each element with its anatomical surface. The result is four named triangle lists (lv, rv, epi, base) and one tetrahedral list (Group_1) used downstream.
 
-Endocardial Volume Computation
+Endocardial Volume Computation-
 Cavity volumes are computed from the triangulated endocardial surfaces using the divergence theorem (also known as the signed tetrahedral decomposition from the origin):
 V = (1/6) | Σ v₁ · (v₂ × v₃) |
 where v₁, v₂, v₃ are the three vertices of each surface triangle, and the summation runs over all triangles in the closed endocardial surface. The absolute value ensures positive volume regardless of triangle orientation. This method is exact for polyhedral surfaces and equivalent to integrating the signed volume of tetrahedra formed between each triangle and the coordinate origin.
