@@ -20,20 +20,28 @@ where p iterates over all endocardial surface nodes, and eᵢ iterates over all 
 
 Three thickness values are reported per mesh:
 •	LV free wall: LV endocardial nodes (non-septal) → epicardial surface
+
 •	RV free wall: RV endocardial nodes → epicardial surface
+
 •	Interventricular septum: LV endocardial nodes in the septal region → RV endocardial surface
 References: Bai et al. (2015)—JCMR—closest-point wall thickness in cardiac MRI; Haddad et al. (2008)—RV thickness methodology.
 
 c) Interventricular Septum Identification:
 The interventricular septum is identified geometrically as the spatial overlap region between the LV and RV endocardial bounding boxes, expanded by a 1 mm margin to capture the full junctional zone:
 •	Compute axis-aligned bounding boxes for all LV and RV endocardial nodes
+
 •	The septal region is defined as the intersection of these boxes (± 1 mm margin)
+
 •	LV endocardial nodes falling within this region are classified as septal; all others as LV free wall
+
 •	Septal thickness = closest-point distance from septal LV nodes to the RV endocardial surface
+
 This spatial overlap approach is robust to inter-subject anatomical variation and avoids the need for explicit septal landmark annotation. It has been validated in biventricular rat models by Healy et al. (2011) and Young & Cowan (2012).
 
 The pipeline is implemented in pure Python 3 with NumPy as the sole runtime dependency (matplotlib is optional for visualization). 
 Key implementation properties:
-•	Zero external mesh libraries — all parsing and geometry is native Python/NumPy
+•	Zero external mesh libraries: all parsing and geometry is native Python/NumPy
+
 •	Spatial hash grid for O(n) nearest-neighbour queries (cell size = 1.5 mm, 3-cell search radius)
+
 •	Outlier rejection: distances < 0.05 mm or > 20 mm excluded from thickness statistics
