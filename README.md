@@ -1,5 +1,5 @@
 # DVJlab_code
-This file demonstrates the methodology behind a computational cardiac pipeline applied to 20 GMSH tetrahedral surface meshes spanning 9 subjects (identifiers: W282, W283, Y283, Y322, Y325, Y329, Y339, Y340, and Z210) across four time points: Weeks 0, 4, 8, and 12. Each mesh encodes the rat biventricular geometry with four labeled physical surfaces: left ventricular (LV) endocardium, right ventricular (RV) endocardium, epicardium, and basal plane.
+This file demonstrates the methodology behind a computational cardiac pipeline applied to 20 GMSH tetrahedral surface meshes spanning 9 subjects (identifiers: W282, W283, Y283, Y322, Y325, Y329, Y339, Y340, and Z210) across four time points: Weeks 0, 4, 8, and 12. Each mesh encodes the rat biventricular geometry with four labelled physical surfaces: left ventricular (LV) endocardium, right ventricular (RV) endocardium, epicardium, and basal plane.
 The primary outputs are (1) LV and RV endocardial cavity volumes in mm³, (2) LV and RV free wall thicknesses in mm, and (3) interventricular septal thickness (mm)
 
 1) Mesh Format and Parsing:
